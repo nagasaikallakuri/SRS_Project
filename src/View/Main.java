@@ -19,6 +19,9 @@ public class Main extends JFrame {
         randomGenButton.setVisible(true);
         randomGenButton.setText("Random Generator");
 
+        JButton clearButton = new JButton();
+        clearButton.setVisible(true);
+        clearButton.setText("Clear");
 
         JPanel canvasPanel = new JPanel();
         canvasPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -32,6 +35,7 @@ public class Main extends JFrame {
         buttonsPanel.setLayout(new GridLayout(0, 5));
         buttonsPanel.setSize(500, 50);
         buttonsPanel.add(randomGenButton);
+        buttonsPanel.add(clearButton);
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
