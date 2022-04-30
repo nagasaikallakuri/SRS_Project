@@ -23,6 +23,10 @@ public class Main extends JFrame {
         randomGenButton.setVisible(true);
         randomGenButton.setText("Random Generator");
 
+        JButton runButton = new JButton();
+        runButton.setVisible(true);
+        runButton.setText("Run");
+
         JButton clearButton = new JButton();
         clearButton.setVisible(true);
         clearButton.setText("Clear");
@@ -40,6 +44,7 @@ public class Main extends JFrame {
         buttonsPanel.setSize(500, 50);
         buttonsPanel.add(saveButton);
         buttonsPanel.add(randomGenButton);
+        buttonsPanel.add(runButton);
         buttonsPanel.add(clearButton);
 
         JPanel mainPanel = new JPanel();
