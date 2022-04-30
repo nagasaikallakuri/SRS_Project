@@ -1,11 +1,12 @@
 package View;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class Main extends JFrame {
+public class Main extends JFrame implements ActionListener{
 
     public Main() {
         JFrame frame = new JFrame();
@@ -26,10 +27,14 @@ public class Main extends JFrame {
         JButton runButton = new JButton();
         runButton.setVisible(true);
         runButton.setText("Run");
+        runButton.addActionListener(this);
+        runButton.setActionCommand("run");
 
         JButton clearButton = new JButton();
         clearButton.setVisible(true);
         clearButton.setText("Clear");
+        clearButton.addActionListener(this);
+        clearButton.setActionCommand("clear");
 
         JPanel canvasPanel = new JPanel();
         canvasPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -65,5 +70,16 @@ public class Main extends JFrame {
         Main main = new Main();
         //main.setSize(800, 800);
         //main.setVisible(true);
+    }
+
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String command = e.getActionCommand();
+        if(command == "run") {
+            new DistanceInputDialog();
+        } else if(command == "clear") {
+            //TODO: - Clear function comes here
+        }
     }
 }
