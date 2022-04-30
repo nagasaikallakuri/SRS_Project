@@ -15,6 +15,10 @@ public class Main extends JFrame {
         canvas.setVisible(true);
         canvas.setForeground(Color.DARK_GRAY);
 
+        JButton saveButton = new JButton();
+        saveButton.setVisible(true);
+        saveButton.setText("Save");
+
         JButton randomGenButton = new JButton();
         randomGenButton.setVisible(true);
         randomGenButton.setText("Random Generator");
@@ -34,6 +38,7 @@ public class Main extends JFrame {
         buttonsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         buttonsPanel.setLayout(new GridLayout(0, 5));
         buttonsPanel.setSize(500, 50);
+        buttonsPanel.add(saveButton);
         buttonsPanel.add(randomGenButton);
         buttonsPanel.add(clearButton);
 
@@ -50,16 +55,10 @@ public class Main extends JFrame {
         frame.setVisible(true);
 
 
-
     }
-
-
     public static void main(String[] args) {
-
         Main main = new Main();
         //main.setSize(800, 800);
         //main.setVisible(true);
     }
-
-
 }
