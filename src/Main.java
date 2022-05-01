@@ -1,5 +1,3 @@
-package View;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,10 +9,11 @@ public class Main extends JFrame implements ActionListener{
     public Main() {
         JFrame frame = new JFrame();
 
-        Canvas canvas = new Canvas();
+        PointCanvas canvas = new PointCanvas();
         canvas.setSize(500, 500);
         canvas.setVisible(true);
         canvas.setForeground(Color.DARK_GRAY);
+        canvas.addMouseListener(new PointClickListener(canvas));
 
         JButton saveButton = new JButton();
         saveButton.setVisible(true);
@@ -42,7 +41,6 @@ public class Main extends JFrame implements ActionListener{
         canvasPanel.setSize(500, 500);
         canvasPanel.add(canvas);
 
-
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         buttonsPanel.setLayout(new GridLayout(0, 5));
@@ -57,19 +55,19 @@ public class Main extends JFrame implements ActionListener{
         mainPanel.add(canvasPanel);
         mainPanel.add(buttonsPanel);
 
-        frame.add(mainPanel, BorderLayout.CENTER);
+
+        frame.add(mainPanel, BorderLayout.CENTER);;
 
         frame.setTitle("SRSproject");
         frame.pack();
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setVisible(true);
 
-
     }
+
+
     public static void main(String[] args) {
         Main main = new Main();
-        //main.setSize(800, 800);
-        //main.setVisible(true);
     }
 
 
