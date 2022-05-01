@@ -6,12 +6,13 @@ import javax.swing.*;
 
 public class Main extends JFrame implements ActionListener{
 
-    static PointCanvas canvas = new PointCanvas();
+    static PointCanvas canvas;
 
     public Main() {
         JFrame frame = new JFrame();
 
-//        CanvasPanel canvas = new CanvasPanel();
+        canvas = new PointCanvas();
+        //CanvasPanel canvas = new CanvasPanel();
         this.canvas.setSize(500, 500);
         this.canvas.setVisible(true);
         this.canvas.setForeground(Color.DARK_GRAY);
@@ -24,6 +25,8 @@ public class Main extends JFrame implements ActionListener{
         JButton randomGenButton = new JButton();
         randomGenButton.setVisible(true);
         randomGenButton.setText("Random Generator");
+        randomGenButton.addActionListener(this);
+        randomGenButton.setActionCommand("randomGenerator");
 
         JButton runButton = new JButton();
         runButton.setVisible(true);
@@ -82,8 +85,11 @@ public class Main extends JFrame implements ActionListener{
         if(command == "run") {
             new DistanceInputDialog();
         } else if(command == "clear") {
-//            canvas.getGraphics().clearRect(0,0, canvas.getWidth(), canvas.getHeight());
+            //canvas.getGraphics().clearRect(0,0, canvas.getWidth(), canvas.getHeight());
             canvas.removePoints();
+        }else if(command == "randomGenerator") {
+            PointClickListener obj = new PointClickListener(canvas);
+            obj.generateDotsRandomly();
         }
     }
 }
