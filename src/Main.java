@@ -36,6 +36,12 @@ public class Main extends JFrame implements ActionListener {
         runButton.addActionListener(this);
         runButton.setActionCommand("run");
 
+        JButton loadButton =new JButton();
+        loadButton.setVisible(true);
+        loadButton.setText("Load");
+        loadButton.addActionListener(this);
+        loadButton.setActionCommand("load");
+
         JButton clearButton = new JButton();
         clearButton.setVisible(true);
         clearButton.setText("Clear");
@@ -58,6 +64,7 @@ public class Main extends JFrame implements ActionListener {
         buttonsPanel.add(randomGenButton);
         buttonsPanel.add(runButton);
         buttonsPanel.add(clearButton);
+        buttonsPanel.add(loadButton);
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -93,6 +100,8 @@ public class Main extends JFrame implements ActionListener {
             canvas.generateDotsRandomly();
         } else if (command == "save") {
             canvas.saveToFile();
+        } else if(command == "load") {
+            canvas.loadFile();
         }
     }
 }

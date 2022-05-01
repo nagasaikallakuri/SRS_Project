@@ -2,11 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.*;
-import java.util.List;
+
 
 public class PointCanvas extends Canvas {
 
@@ -70,6 +71,40 @@ public class PointCanvas extends Canvas {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+    }
+    public void loadFile() {
+        //Loading file
+        File selectedFile;
+        PointModel point =  null;
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            selectedFile = fileChooser.getSelectedFile();
+            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+        }
+        else {
+            selectedFile = null;
+            return;
+        }
+        //Reading the file
+        try {
+            System.out.println("In reading block");
+            File selectedFileToWrite = new File(selectedFile.getAbsolutePath());
+            Scanner myReader = new Scanner(selectedFileToWrite);
+            points.clear();
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                String[] coordinates = data.split(",");
+                point = new PointModel(Integer.parseInt(coordinates[0]),Integer.parseInt(coordinates[1]));
+                points.add(point);
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        this.repaint();
     }
 
     public void initAndRunDbScan(int distanceToRun) {
