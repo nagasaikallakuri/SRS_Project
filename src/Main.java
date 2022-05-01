@@ -82,7 +82,8 @@ public class Main extends JFrame implements ActionListener{
         if(command == "run") {
             new DistanceInputDialog();
         } else if(command == "clear") {
-            canvas.getGraphics().clearRect(0,0, canvas.getWidth(), canvas.getHeight());
+//            canvas.getGraphics().clearRect(0,0, canvas.getWidth(), canvas.getHeight());
+            canvas.removePoints();
         }
     }
 }

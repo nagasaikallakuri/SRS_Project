@@ -11,6 +11,12 @@ public class PointCanvas extends Canvas {
         points.add(pointModel);
         this.repaint();
     }
+
+    public void removePoints() {
+        points.clear();
+        this.repaint();
+    }
+
     @Override
     public void paint(Graphics graphics) {
         for(PointModel point : points) {
