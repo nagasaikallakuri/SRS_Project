@@ -21,6 +21,8 @@ public class Main extends JFrame implements ActionListener{
         JButton saveButton = new JButton();
         saveButton.setVisible(true);
         saveButton.setText("Save");
+        saveButton.addActionListener(this);
+        saveButton.setActionCommand("save");
 
         JButton randomGenButton = new JButton();
         randomGenButton.setVisible(true);
@@ -85,11 +87,11 @@ public class Main extends JFrame implements ActionListener{
         if(command == "run") {
             new DistanceInputDialog();
         } else if(command == "clear") {
-            //canvas.getGraphics().clearRect(0,0, canvas.getWidth(), canvas.getHeight());
             canvas.removePoints();
-        }else if(command == "randomGenerator") {
-            PointClickListener obj = new PointClickListener(canvas);
-            obj.generateDotsRandomly();
+        } else if(command == "randomGenerator") {
+            canvas.generateDotsRandomly();
+        } else if(command == "save") {
+            canvas.saveToFile();
         }
     }
 }

@@ -17,19 +17,6 @@ public class PointClickListener extends MouseAdapter {
 
     PointClickListener() {}
 
-    public void generateDotsRandomly(){
-        Random rand = new Random();
-        for(int i=0; i<20; i++){
-            int x = rand.nextInt(1400);
-            int y = rand.nextInt(700);
-            //System.out.println("Random Generator event");
-            //System.out.println(x);
-            //System.out.println(y);
-            pointPanel.addPoints(new PointModel(x, y));
-
-        }
-    }
-
     @Override
     public void mouseClicked(MouseEvent e) {
 
