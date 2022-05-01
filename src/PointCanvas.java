@@ -52,10 +52,10 @@ public class PointCanvas extends Canvas {
 
     public void saveToFile() {
         try {
-            Timestamp timestamp = Timestamp.from(Instant.now());
-            String location = System.getProperty("java.class.path");
+            long timestamp = Timestamp.from(Instant.now()).getTime();
+//            String location = System.getProperty("java.class.path");
             String fileName = "canvas_" + timestamp;
-            File myObj = new File(location + fileName + ".txt");
+            File myObj = new File(fileName + ".txt");
             if (myObj.createNewFile()) System.out.println("File created: " + myObj.getName());
             else System.out.println("File already exists.");
 
@@ -67,6 +67,13 @@ public class PointCanvas extends Canvas {
 
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
+
+            JOptionPane.showMessageDialog(null,
+                    "Successfully saved in file " + fileName + ".txt",
+                    "",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null
+            );
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
