@@ -4,7 +4,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class Main extends JFrame implements ActionListener{
+public class Main extends JFrame implements ActionListener {
 
     static PointCanvas canvas;
 
@@ -65,7 +65,7 @@ public class Main extends JFrame implements ActionListener{
         mainPanel.add(buttonsPanel);
 
 
-        frame.add(mainPanel, BorderLayout.CENTER);;
+        frame.add(mainPanel, BorderLayout.CENTER);
 
         frame.setTitle("SRSproject");
         frame.pack();
@@ -84,13 +84,14 @@ public class Main extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
-        if(command == "run") {
+        if (command == "run") {
             new DistanceInputDialog();
-        } else if(command == "clear") {
+            canvas.initAndRunDbScan(DistanceInputDialog.distanceToRun);
+        } else if (command == "clear") {
             canvas.removePoints();
-        } else if(command == "randomGenerator") {
+        } else if (command == "randomGenerator") {
             canvas.generateDotsRandomly();
-        } else if(command == "save") {
+        } else if (command == "save") {
             canvas.saveToFile();
         }
     }

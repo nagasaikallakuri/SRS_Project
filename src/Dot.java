@@ -3,6 +3,7 @@ public class Dot {
     boolean connected = false;
     public int x;
     public int y;
+    public PointModel pointModel;
     String dotId;
 
     public static String getIDForDot(int x, int y) {
@@ -13,6 +14,11 @@ public class Dot {
         this.x = x;
         this.y = y;
         this.dotId = getIDForDot(x, y);
+    }
+
+    public Dot(PointModel point) {
+        this(point.getX(), point.getY());
+        this.pointModel = point;
     }
 
     public void setConnected(Boolean connected) {

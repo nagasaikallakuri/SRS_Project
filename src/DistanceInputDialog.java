@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 public class DistanceInputDialog extends JFrame {
 
-    static int distanceToRun = 10;
+    static int distanceToRun = 100;
 
     public DistanceInputDialog() {
         this.setUpDialogBox();
@@ -13,19 +13,19 @@ public class DistanceInputDialog extends JFrame {
 
     private void setUpDialogBox() {
         JOptionPane optionPane = new JOptionPane();
-        String result = (String)optionPane.showInputDialog(
+        String result = (String) optionPane.showInputDialog(
                 null,
-                "Enter the distance",
+                "Enter the distance in Pixel",
                 "",
                 JOptionPane.PLAIN_MESSAGE,
                 null,
                 null,
-                "10"
+                "" + distanceToRun
         );
         int distanceInputed = 0;
         try {
             distanceInputed = Integer.parseInt(result);
-            if(distanceInputed > 0) {
+            if (distanceInputed > 0) {
                 distanceToRun = distanceInputed;
             } else {
                 this.showErrorMessage();

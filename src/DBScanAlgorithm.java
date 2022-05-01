@@ -5,14 +5,29 @@ import static java.util.Collections.shuffle;
 
 public class DBScanAlgorithm {
     double userDefinedDistance;
-    ArrayList<Dot> clickedDots;
+    ArrayList<Dot> clickedDots = new ArrayList<>();
     Set<String> notConsideredAsRootDotIDsArray = new LinkedHashSet<>();
 
-    HashMap<String, ArrayList<String>> clusteredDotsMap = new HashMap<>();
+    HashMap<String, ArrayList<String>> clusteredDotsIdsMap = new HashMap<>();
+    HashMap<Dot, ArrayList<Dot>> clusteredDotsMap = new HashMap<>();
 
     //For console visualise:
     Set<String> printedDotIdsArray = new LinkedHashSet<>();
 
+    public DBScanAlgorithm(double distance, ArrayList<PointModel> clickedPointsArray) {
+        this.userDefinedDistance = distance;
+        for (PointModel pointModel : clickedPointsArray) {
+            this.clickedDots.add(new Dot(pointModel));
+        }
+
+        //Shuffling Clicked Dots array to randomly choose dots as roots.
+        shuffle(clickedDots);
+        for (Dot dot : clickedDots) {
+            if (null != dot) {
+                notConsideredAsRootDotIDsArray.add(dot.getDotId());
+            }
+        }
+    }
 
     public DBScanAlgorithm(double distance, Canvas canvas, ArrayList<Dot> clickedDots) {
         this.userDefinedDistance = distance;
@@ -30,6 +45,9 @@ public class DBScanAlgorithm {
      * Runs Clustering algorithm on all dots. Shuffled Array is used for randomness and is traversed.
      */
     public void runClusteringAlgorithmForAllDots(ArrayList<Dot> dotsArray) {
+        if (null == dotsArray) {
+            dotsArray = this.clickedDots;
+        }
         for (Dot dot : dotsArray) {
             if (notConsideredAsRootDotIDsArray.contains(dot.getDotId())) {
 //                System.out.println("Dot considered For Clustering: " + dot.getDotId());
@@ -68,14 +86,16 @@ public class DBScanAlgorithm {
                         connectedToThisDot.add(dot);
                         connectedIDsToThisDot.add(dot.getDotId());
                         dot.setConnected(true);
-//                        System.out.println("Dot " + selectedDot.getDotId() + "dot " + dot.getDotId() + "are closer. Eucli Distance " + euclideanDistance);
+                        System.out.println("Dot " + selectedDot.getDotId() + "dot " + dot.getDotId() + "are closer. Eucli Distance " + euclideanDistance);
                     } else {
 //                        System.out.println("Dot " + selectedDot.getDotId() + "dot " + dot.getDotId() + " are not closer. Eucli distance " + euclideanDistance);
                     }
                 }
             }
+            clusteredDotsMap.put(selectedDot, connectedToThisDot);
             //For testing console visualisation
-            clusteredDotsMap.put(selectedDot.getDotId(), connectedIDsToThisDot);
+            clusteredDotsIdsMap.put(selectedDot.getDotId(), connectedIDsToThisDot);
+
             runClusteringAlgorithmForAllDots(connectedToThisDot);
         }
 
@@ -94,27 +114,55 @@ public class DBScanAlgorithm {
         }
     }
 
+    public void canvasVisualisationOfClustering(Graphics g) {
+        for (Dot dot : clickedDots) {
+            if (!printedDotIdsArray.contains(dot.getDotId())) {
+                printTreeMapForADotInCanvas(dot, g);
+            }
+        }
+    }
+
+    private void printTreeMapForADotInCanvas(Dot dot, Graphics g) {
+        printedDotIdsArray.add(dot.getDotId());
+        for (Dot connectedDot : clusteredDotsMap.get(dot)) {
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setStroke(new BasicStroke(1.5f));
+            g2d.drawLine(dot.x, dot.y, connectedDot.x, connectedDot.y);
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+//            printTreeMapForADotInCanvas(connectedDot, g);
+        }
+        for (Dot connectedDot : clusteredDotsMap.get(dot)) {
+            printTreeMapForADotInCanvas(connectedDot, g);
+        }
+
+    }
+
+
     //For console Visualisation of clusters tree
     private void consoleVisualisationOfClustering() {
         for (Dot dot : clickedDots) {
 //            System.out.println(dot.getDotId() + "->");
             if (!printedDotIdsArray.contains(dot.getDotId())) {
-                printTreeMapForADot(dot.getDotId(), 0);
+                printTreeMapForADotInConsole(dot.getDotId(), 0);
             }
 
         }
     }
 
     //For console Visualisation of clusters tree
-    private void printTreeMapForADot(String dotId, int iteration) {
+    private void printTreeMapForADotInConsole(String dotId, int iteration) {
         for (int i = 0; i < iteration; i++) {
             System.out.print("\t");
         }
         System.out.println("|" + dotId);
         printedDotIdsArray.add(dotId);
 
-        for (String connectedDotId : clusteredDotsMap.get(dotId)) {
-            printTreeMapForADot(connectedDotId, iteration + 1);
+        for (String connectedDotId : clusteredDotsIdsMap.get(dotId)) {
+            printTreeMapForADotInConsole(connectedDotId, iteration + 1);
         }
 
     }
@@ -144,7 +192,7 @@ public class DBScanAlgorithm {
         obj.runClusteringAlgorithmForAllDots(dp);
 //        obj.consoleVisualisationOfClustering();
         System.out.println("Dot cluster Map");
-        System.out.println(obj.clusteredDotsMap);
+        System.out.println(obj.clusteredDotsIdsMap);
         System.out.println("\nConsole Representation of clustering\n");
 
         obj.consoleVisualisationOfClustering();
