@@ -6,14 +6,16 @@ import javax.swing.*;
 
 public class Main extends JFrame implements ActionListener{
 
+    static PointCanvas canvas = new PointCanvas();
+
     public Main() {
         JFrame frame = new JFrame();
 
-        PointCanvas canvas = new PointCanvas();
-        canvas.setSize(500, 500);
-        canvas.setVisible(true);
-        canvas.setForeground(Color.DARK_GRAY);
-        canvas.addMouseListener(new PointClickListener(canvas));
+//        CanvasPanel canvas = new CanvasPanel();
+        this.canvas.setSize(500, 500);
+        this.canvas.setVisible(true);
+        this.canvas.setForeground(Color.DARK_GRAY);
+
 
         JButton saveButton = new JButton();
         saveButton.setVisible(true);
@@ -40,6 +42,8 @@ public class Main extends JFrame implements ActionListener{
         canvasPanel.setLayout(new GridLayout(0, 1));
         canvasPanel.setSize(500, 500);
         canvasPanel.add(canvas);
+        canvas.addMouseListener(new PointClickListener(canvas));
+
 
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -63,6 +67,7 @@ public class Main extends JFrame implements ActionListener{
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setVisible(true);
 
+
     }
 
 
@@ -77,7 +82,7 @@ public class Main extends JFrame implements ActionListener{
         if(command == "run") {
             new DistanceInputDialog();
         } else if(command == "clear") {
-            //TODO: - Clear function comes here
+            canvas.getGraphics().clearRect(0,0, canvas.getWidth(), canvas.getHeight());
         }
     }
 }
