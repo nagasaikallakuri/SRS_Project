@@ -92,8 +92,10 @@ public class Main extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
         if (command == "run") {
-            new DistanceInputDialog();
-            canvas.initAndRunDbScan(DistanceInputDialog.distanceToRun);
+            DistanceInputDialog inputDialog = new DistanceInputDialog();
+            if(inputDialog.setUpDialogBox()) {
+                canvas.initAndRunDbScan(DistanceInputDialog.distanceToRun);
+            }
         } else if (command == "clear") {
             canvas.removePoints();
         } else if (command == "randomGenerator") {

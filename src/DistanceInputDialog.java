@@ -7,11 +7,7 @@ public class DistanceInputDialog extends JFrame {
 
     static int distanceToRun = 100;
 
-    public DistanceInputDialog() {
-        this.setUpDialogBox();
-    }
-
-    private void setUpDialogBox() {
+    public boolean setUpDialogBox() {
         JOptionPane optionPane = new JOptionPane();
         String result = (String) optionPane.showInputDialog(
                 null,
@@ -22,16 +18,23 @@ public class DistanceInputDialog extends JFrame {
                 null,
                 "" + distanceToRun
         );
-        int distanceInputed = 0;
-        try {
-            distanceInputed = Integer.parseInt(result);
-            if (distanceInputed > 0) {
-                distanceToRun = distanceInputed;
-            } else {
+        if(result != null) {
+            int distanceInputed = 0;
+            try {
+                distanceInputed = Integer.parseInt(result);
+                if (distanceInputed > 0) {
+                    distanceToRun = distanceInputed;
+                    return true;
+                } else {
+                    this.showErrorMessage();
+                    return false;
+                }
+            } catch (NumberFormatException e) {
                 this.showErrorMessage();
+                return false;
             }
-        } catch (NumberFormatException e) {
-            this.showErrorMessage();
+        } else {
+            return false;
         }
     }
 
