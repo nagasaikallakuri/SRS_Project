@@ -118,6 +118,12 @@ public class DBScanAlgorithm {
         for (Dot dot : clickedDots) {
             if (!printedDotIdsArray.contains(dot.getDotId())) {
                 printTreeMapForADotInCanvas(dot, g);
+                // To Delay picking the next random root dot for clustering
+                try {
+                    Thread.sleep(800);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
