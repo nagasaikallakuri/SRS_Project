@@ -130,19 +130,22 @@ public class DBScanAlgorithm {
 
     private void printTreeMapForADotInCanvas(Dot dot, Graphics g) {
         printedDotIdsArray.add(dot.getDotId());
-        for (Dot connectedDot : clusteredDotsMap.get(dot)) {
-            Graphics2D g2d = (Graphics2D) g;
-            g2d.setStroke(new BasicStroke(1.5f));
-            g2d.drawLine(dot.x, dot.y, connectedDot.x, connectedDot.y);
-            try {
-                Thread.sleep(200);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+        ArrayList<Dot> dotArrayList = clusteredDotsMap.get(dot);
+        if (null != dotArrayList) {
+            for (Dot connectedDot : dotArrayList) {
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setStroke(new BasicStroke(1.5f));
+                g2d.drawLine(dot.x, dot.y, connectedDot.x, connectedDot.y);
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
 //            printTreeMapForADotInCanvas(connectedDot, g);
-        }
-        for (Dot connectedDot : clusteredDotsMap.get(dot)) {
-            printTreeMapForADotInCanvas(connectedDot, g);
+            }
+            for (Dot connectedDot : dotArrayList) {
+                printTreeMapForADotInCanvas(connectedDot, g);
+            }
         }
 
     }
